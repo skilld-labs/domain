@@ -11,8 +11,9 @@
 function domain_config_ui_preprocess_page(&$variables) {
   $route = \Drupal::routeMatch()->getRouteObject();
   $is_admin = \Drupal::service('router.admin_context')->isAdminRoute($route);
+  $has_permissions = \Drupal::currentUser()->hasPermission('access domain config widget');
 
-  if ($is_admin) {
+  if ($is_admin && $has_permissions) {
     $form = \Drupal::formBuilder()->getForm('Drupal\domain_config_ui\Form\SwitchForm');
     $variables['page']['content']['domain_config_ui_switch'] = $form;
   }
